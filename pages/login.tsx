@@ -1,10 +1,14 @@
 import React from 'react'
 import {
   styled,
-  Button,
   Grid,
-  Paper
+  Paper,
+  Box
 } from "@material-ui/core"
+
+import Image from 'next/image'
+
+import bg from "public/bg.png"
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -15,20 +19,24 @@ const Item = styled(Paper)(({ theme }) => ({
 
 const Login = () => {
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={8}>
-        <Item>xs=8</Item>
-      </Grid>
-      <Grid item xs={4}>
-        <Item>xs=4</Item>
-      </Grid>
-      <Grid item xs={4}>
-        <Item>xs=4</Item>
-      </Grid>
-      <Grid item xs={8}>
-        <Item>xs=8</Item>
-      </Grid>
-    </Grid>
+    <Box sx={{ display: 'flex', height: "100vh", border: "1px solid red" }}>
+      <Box sx={{
+        flex: 1,
+
+        objectFit: 'cover',
+        width: "100%",
+        height: "100%",
+        border: "1px solid red"
+      }}>
+        <Image src={bg} alt="bg" width="100%" height="100%" />
+      </Box>
+      <Box sx={{
+        flex: 1,
+        border: "1px solid red"
+      }}>
+        dois
+      </Box>
+    </Box>
   )
 }
 
