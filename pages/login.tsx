@@ -1,43 +1,178 @@
-import React from 'react'
+import React from "react";
 import {
-  styled,
-  Grid,
-  Paper,
-  Box
-} from "@material-ui/core"
-
-import Image from 'next/image'
-
-import bg from "public/bg.png"
+	styled,
+	Typography,
+	Grid,
+	Paper,
+	Box,
+	Button,
+	TextField,
+	InputAdornment,
+	OutlinedInput,
+} from "@material-ui/core";
+import { EmailOutlined, LockOutlined } from "@material-ui/icons";
+import Image from "next/image";
+import Link from "next/link";
 
 const Item = styled(Paper)(({ theme }) => ({
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: 'center',
-  color: theme.palette.text.secondary,
+	...theme.typography.body2,
+	padding: theme.spacing(1),
+	textAlign: "center",
+	color: theme.palette.text.secondary,
 }));
 
 const Login = () => {
-  return (
-    <Box sx={{ display: 'flex', height: "100vh", border: "1px solid red" }}>
-      <Box sx={{
-        flex: 1,
+	return (
+		<Box
+			sx={{
+				display: "flex",
+				height: "100vh",
+				"@media(max-width: 600px)": {
+					border: "1px solid red",
+					display: "flex",
+					flexDirection: "column",
+				},
+			}}
+		>
+			<Box
+				sx={{
+					display: "flex",
+					flexDirection: "column",
+					alignItems: "center",
+					justifyContent: "center",
+					flex: 1,
+					backgroundImage: `url("/assets/img/bg.png")`,
+					backgroundSize: "cover",
+				}}
+			>
+				<Box
+					sx={{
+						display: "flex",
+						flexDirection: "column",
+						alignItems: "flex-start",
+						justifyContent: "center",
+						height: "100%",
+						gap: "10px",
+						"@media(max-width: 600px)": {
+							justifyContent: "center",
+							alignItems: "center",
+						},
+					}}
+				>
+					<Typography
+						sx={{
+							fontFamily: "Poppins, sans-serif",
+							color: (theme) => theme.palette.common.white,
+							fontWeight: "bold",
+							fontSize: "40px",
+						}}
+					>
+						GoFinance
+					</Typography>
+					<Typography
+						sx={{
+							fontWeight: "500",
+							fontSize: "18px",
+							color: (theme) => theme.palette.common.white,
+							fontFamily: "Poppins, sans-serif",
+						}}
+					>
+						The most popular peer to peer lending at SEA
+					</Typography>
+					<Button
+						sx={{
+							color: (theme) => theme.palette.common.white,
+							background: "#0575E6",
+							width: "135px",
+							height: "37px",
+							borderRadius: "30px",
+							fontSize: "14px",
+							textTransform: "none",
+							marginTop: "20px",
+						}}
+					>
+						Read More
+					</Button>
+				</Box>
+			</Box>
+			<Box
+				sx={{
+					flex: 1,
+					display: "flex",
+					justifyContent: "center",
+					alignItems: "center",
+				}}
+			>
+				<Box sx={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+					<Typography
+						sx={{
+							fontFamily: "Poppins, sans-serif",
+							fontWeight: 700,
+							fontSize: 26,
+						}}
+					>
+						Hello Again!
+					</Typography>
+					<Typography sx={{ marginBottom: "40px" }}>Welcome Back</Typography>
+					<form>
+						<Box sx={{ display: "flex", gap: "16px", flexDirection: "column" }}>
+							<OutlinedInput
+								id="email"
+								name="email"
+								placeholder="Email Address"
+								startAdornment={
+									<InputAdornment position="start">
+										<EmailOutlined sx={{ opacity: 0.3 }} />
+									</InputAdornment>
+								}
+								sx={{
+									width: 307,
+									height: 60,
+									backgroundColor: "#FFFFFF",
+									boxSizing: "border-box",
+									borderRadius: 30,
+								}}
+							/>
+							<OutlinedInput
+								id="password"
+								name="password"
+								placeholder="Password"
+								startAdornment={
+									<InputAdornment position="start">
+										<LockOutlined sx={{ opacity: 0.3 }} />
+									</InputAdornment>
+								}
+								sx={{
+									width: 307,
+									height: 60,
+									backgroundColor: "#FFFFFF",
+									boxSizing: "border-box",
+									borderRadius: "30px",
+								}}
+							/>
+							<Button
+								sx={{
+									width: "307px",
+									height: "57px",
+									background: "#0575E6",
+									borderRadius: "30px",
+									color: (theme) => theme.palette.common.white,
+									"&:hover": {
+										backgroundColor: "red",
+									},
+								}}
+							>
+								Login
+							</Button>
+							<Box sx={{ display: "flex", justifyContent: "center" }}>
+								<Link href="/">Forgot Password</Link>
+							</Box>
+						</Box>
+					</form>
+				</Box>
+			</Box>
+		</Box>
+	);
+};
 
-        objectFit: 'cover',
-        width: "100%",
-        height: "100%",
-        border: "1px solid red"
-      }}>
-        <Image src={bg} alt="bg" width="100%" height="100%" />
-      </Box>
-      <Box sx={{
-        flex: 1,
-        border: "1px solid red"
-      }}>
-        dois
-      </Box>
-    </Box>
-  )
-}
-
-export default Login
+export default Login;
