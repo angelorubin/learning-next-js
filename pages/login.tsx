@@ -9,10 +9,11 @@ import {
 	TextField,
 	InputAdornment,
 	OutlinedInput,
+	Link,
 } from "@material-ui/core";
 import { EmailOutlined, LockOutlined } from "@material-ui/icons";
 import Image from "next/image";
-import Link from "next/link";
+import NextLink from "next/link";
 
 const Item = styled(Paper)(({ theme }) => ({
 	...theme.typography.body2,
@@ -28,7 +29,6 @@ const Login = () => {
 				display: "flex",
 				height: "100vh",
 				"@media(max-width: 600px)": {
-					border: "1px solid red",
 					display: "flex",
 					flexDirection: "column",
 				},
@@ -67,7 +67,7 @@ const Login = () => {
 							fontSize: "40px",
 						}}
 					>
-						GoFinance
+						Easy ERP
 					</Typography>
 					<Typography
 						sx={{
@@ -158,14 +158,16 @@ const Login = () => {
 									borderRadius: "30px",
 									color: (theme) => theme.palette.common.white,
 									"&:hover": {
-										backgroundColor: "red",
+										backgroundColor: "blue",
 									},
 								}}
 							>
 								Login
 							</Button>
 							<Box sx={{ display: "flex", justifyContent: "center" }}>
-								<Link href="/">Forgot Password</Link>
+								<Link component={NextLink} href="/">
+									Forgot Password
+								</Link>
 							</Box>
 						</Box>
 					</form>
