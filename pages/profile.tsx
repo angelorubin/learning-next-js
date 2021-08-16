@@ -1,23 +1,32 @@
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import { Box, Typography, Input } from "@material-ui/core";
 import React from "react";
 import Image from "next/image";
 import profilePic from "../public/assets/img/profile-default.jpg";
 import http from "axios";
 
-const Profile = () => {
-	const [file, setFile] = useState("");
+export async function getStaticProps(context) {
+	cloudinary.v2.search
+		.expression('resource_type:image AND tags=kitten AND uploaded_at>1d AND bytes>1m')
+		.sort_by('public_id', 'desc')
+		.max_results(30)
+		.execute().then(result => console.log(result));
+	return {
+		props: {}, // will be passed to the page component as props
+	}
+}
 
-	const fileRef = useRef();
+const Profile = () => {
 
 	const handleChange = async (e) => {
-		e.preventDefault();
 
 		const formData = new FormData();
 
-		const file = document.querySelector("#file").files[0];
+		let files = e.target.files[0]
 
-		formData.append("image", file);
+		console.log(files)
+
+		formData.append("files", files);
 
 		try {
 			const resp = await http.post("/api/profile", formData, {

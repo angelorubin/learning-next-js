@@ -1,52 +1,59 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiRequest, NextApiResponse, NextPage } from "next";
 import cloudinary from "cloudinary";
 import formidable from "formidable";
+import util from "util";
 
-type Data = {};
+type Data = {
+  data: object;
+};
 
 // Cloudinary
 cloudinary.config({
-	cloud_name: process.env.CLOUDINARY_NAME,
-	api_key: process.env.CLOUDINARY_KEY,
-	api_secret: process.env.CLOUDINARY_SECRET,
+  cloud_name: process.env.CLOUDINARY_NAME,
+  api_key: process.env.CLOUDINARY_KEY,
+  api_secret: process.env.CLOUDINARY_SECRET,
 });
 
-export default function handler(
-	req: NextApiRequest,
-	res: NextApiResponse<Data>,
-	next: NextApiResponse
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
+
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<Data>
 ) {
-	if (req.method === "POST") {
-		try {
-			const formData = formidable();
-			formData.parse(req, (err, fields, files) => {
-				if (err) {
-					res.json({ err });
-					return;
-				}
-				res.json({ fields, files });
-			});
-		} catch (err) {
-			return res.json(err);
-		}
-	}
-	res.json({ test: "test" });
+  const data = await new Promise((resolve, reject) => {
+    const form = formidable();
+
+    form.parse(req, (err, fields, files) => {
+      if (err) reject({ err });
+      resolve({ err, fields, files });
+    });
+  });
+
+  cloudinary.v2.uploader.upload(data.files.files.path, {}, (error, result) => {
+    res.json({
+      status: "ok",
+      data: data.files.files,
+    });
+  });
 }
 
 /*
-		cloudinary.v2.uploader.upload(files, function (error, result) {
-			if (error) {
-				res.json({ error });
-			}
-			res.json({ result });
-		});
-		
+	cloudinary.v2.uploader.upload(files, function (error, result) {
+		if (error) {
+			res.json({ error });
+		}
+		res.json({ result });
+	});
 
 	// const body = JSON.parse(req.body);
 	// res.json({ message: "profile route ok" });
 	// res.json({ data: body });
-	/**
+
 	cloudinary.config({
 		cloud_name: "angelorubin",
 		api_key: "149925445922486",
