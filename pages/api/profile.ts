@@ -1,80 +1,71 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiRequest, NextApiResponse, NextPage } from "next";
+import Cors from "cors";
+import type { NextApiRequest, NextApiResponse } from "next";
 import cloudinary from "cloudinary";
 import formidable from "formidable";
-import util from "util";
+import { initMiddleware, cors } from "pages/api/libs/initMiddleware";
 
 type Data = {
-  data: object;
+	data: object;
 };
 
 // Cloudinary
 cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_NAME,
-  api_key: process.env.CLOUDINARY_KEY,
-  api_secret: process.env.CLOUDINARY_SECRET,
+	cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+	api_key: process.env.CLOUDINARY_API_KEY,
+	api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
 export const config = {
-  api: {
-    bodyParser: false,
-  },
+	api: {
+		bodyParser: false,
+	},
 };
 
 export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<Data>
+	req: NextApiRequest,
+	res: NextApiResponse<Data>
 ) {
-  const { err, files, fields } = await new Promise((resolve, reject) => {
-    const form = formidable();
+	// Run the middleware
+	await cors(req, res);
 
-    form.parse(req, (err, fields, files) => {
-      if (err) {
-        reject(err);
-        return;
-      }
-      resolve({ err, fields, files });
-    });
-  });
+	const { err, files, fields } = await new Promise((resolve, reject) => {
+		const form = formidable();
 
-  if (err) res.json({ err });
+		form.parse(req, (err, fields, files) => {
+			if (err) {
+				reject(err);
+				return;
+			}
+			resolve({ err, fields, files });
+		});
+	});
 
-  const { path, name } = files.profilePic;
-  console.log(path);
+	if (err) {
+		return res.json({ err });
+	}
 
-  res.json({ path, name });
+	const { path, name } = files.profilePic;
+	console.log({ name, path });
+	res.json({ name, path });
+
+	/*
+	try {
+		cloudinary.v2.uploader.upload(
+			path,
+			{ public_id: "default-profile-picture", folder: "easy-erp" },
+			(error, result) => {
+				if (error) {
+					res.json({ error });
+				}
+				res.json({
+					status: "OK",
+					message: "imagem do perfil armazenada com sucesso.",
+				});
+			}
+		);
+	} catch (error) {
+		res.json({ error });
+	}
+  */
 }
-
-/*
-  cloudinary.v2.uploader.upload(data.files.files.path, {}, (error, result) => {
-    res.json({
-      status: "ok",
-      data: data.files.files,
-    });
-  });
-
-	cloudinary.v2.uploader.upload(files, function (error, result) {
-		if (error) {
-			res.json({ error });
-		}
-		res.json({ result });
-	});
-
-	// const body = JSON.parse(req.body);
-	// res.json({ message: "profile route ok" });
-	// res.json({ data: body });
-
-	cloudinary.config({
-		cloud_name: "angelorubin",
-		api_key: "149925445922486",
-		api_secret: "KMbZ_joPRKLsTPgekw_SjoW04Qc",
-	});
-
-	cloudinary.v2.uploader.upload(
-		"https://static.remove.bg/remove-bg-web/bf554ca6716508caedc52f1ac289b1eec29b6734/assets/start_remove-79a4598a05a77ca999df1dcb434160994b6fde2c3e9101984fb1be0f16d0a74e.png",
-		{ public_id: "sample_woman" },
-		function (error, result) {
-			console.log(result);
-		}
-	);
-	*/
