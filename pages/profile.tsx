@@ -6,11 +6,13 @@ import profilePic from "../public/assets/img/profile-default.jpg";
 import http from "axios";
 
 export async function getStaticProps(context) {
+	/*
 	cloudinary.v2.search
 		.expression('resource_type:image AND tags=kitten AND uploaded_at>1d AND bytes>1m')
 		.sort_by('public_id', 'desc')
 		.max_results(30)
 		.execute().then(result => console.log(result));
+		*/
 	return {
 		props: {}, // will be passed to the page component as props
 	}
@@ -26,7 +28,7 @@ const Profile = () => {
 
 		console.log(files)
 
-		formData.append("files", files);
+		formData.append("profilePic", files);
 
 		try {
 			const resp = await http.post("/api/profile", formData, {

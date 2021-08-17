@@ -25,24 +25,34 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  const data = await new Promise((resolve, reject) => {
+  const { err, files, fields } = await new Promise((resolve, reject) => {
     const form = formidable();
 
     form.parse(req, (err, fields, files) => {
-      if (err) reject({ err });
+      if (err) {
+        reject(err);
+        return;
+      }
       resolve({ err, fields, files });
     });
   });
 
+  if (err) res.json({ err });
+
+  const { path, name } = files.profilePic;
+  console.log(path);
+
+  res.json({ path, name });
+}
+
+/*
   cloudinary.v2.uploader.upload(data.files.files.path, {}, (error, result) => {
     res.json({
       status: "ok",
       data: data.files.files,
     });
   });
-}
 
-/*
 	cloudinary.v2.uploader.upload(files, function (error, result) {
 		if (error) {
 			res.json({ error });
