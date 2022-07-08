@@ -1,6 +1,5 @@
-import { useRef } from "react";
-import { Box, Typography, Input } from "@material-ui/core";
-import React from "react";
+import React, { useRef } from "react";
+import { Box, Typography, Input } from "@mui/material";
 import Image from "next/image";
 import profilePic from "../public/assets/img/profile-default.jpg";
 import http from "axios";
@@ -18,7 +17,7 @@ export async function getStaticProps(context) {
 	}
 }
 
-const Profile = () => {
+export default function Profile() {
 
 	const handleChange = async (e) => {
 
@@ -94,5 +93,3 @@ const Profile = () => {
 		</Box>
 	);
 };
-
-export default Profile;

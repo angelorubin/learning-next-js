@@ -22,7 +22,7 @@ const Item = styled(Paper)(({ theme }) => ({
 	color: theme.palette.text.secondary,
 }));
 
-const Login = () => {
+export default function Login() {
 	return (
 		<Box
 			sx={{
@@ -137,6 +137,7 @@ const Login = () => {
 								id="password"
 								name="password"
 								placeholder="Password"
+								type="password"
 								startAdornment={
 									<InputAdornment position="start">
 										<LockOutlined sx={{ opacity: 0.3 }} />
@@ -176,5 +177,3 @@ const Login = () => {
 		</Box>
 	);
 };
-
-export default Login;
