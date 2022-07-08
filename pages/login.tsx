@@ -59,7 +59,7 @@ export default function Login() {
 							fontSize: "40px",
 						}}
 					>
-						Easy ERP
+						Next Blog
 					</Typography>
 					<Typography
 						sx={{
