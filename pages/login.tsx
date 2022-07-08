@@ -14,6 +14,7 @@ import {
 import { EmailOutlined, LockOutlined } from "@material-ui/icons";
 import Image from "next/image";
 import NextLink from "next/link";
+import { useTheme } from "@mui/material"
 
 const Item = styled(Paper)(({ theme }) => ({
 	...theme.typography.body2,
@@ -23,26 +24,25 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export default function Login() {
+	const theme = useTheme()
+	const { primary, secondary, error, warning } = theme.palette
+
 	return (
 		<Box
 			sx={{
 				display: "flex",
-				height: "100vh",
-				"@media(max-width: 600px)": {
-					display: "flex",
-					flexDirection: "column",
-				},
+				alignItems: "stretch",
+				height: "100vh"
 			}}
 		>
 			<Box
 				sx={{
 					display: "flex",
+					flex: 1,
+					height: "100vh",
 					flexDirection: "column",
 					alignItems: "center",
-					justifyContent: "center",
-					flex: 1,
-					backgroundImage: `url("/assets/img/bg.png")`,
-					backgroundSize: "cover",
+					backgroundColor: primary.main
 				}}
 			>
 				<Box
@@ -95,15 +95,18 @@ export default function Login() {
 					</Button>
 				</Box>
 			</Box>
+
 			<Box
 				sx={{
 					flex: 1,
 					display: "flex",
 					justifyContent: "center",
 					alignItems: "center",
+					border: "2px solid red",
+					height: "100vh"
 				}}
 			>
-				<Box sx={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+				<Box sx={{ display: "flex", flexDirection: "column" }}>
 					<Typography
 						sx={{
 							fontFamily: "Poppins, sans-serif",

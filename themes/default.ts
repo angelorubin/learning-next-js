@@ -8,10 +8,10 @@ export const theme = createTheme({
       black: "#000",
     },
     primary: {
-      main: pink[500],
+      main: blue[500],
     },
     secondary: {
-      main: green[500],
+      main: pink[500],
     },
   },
   typography: {

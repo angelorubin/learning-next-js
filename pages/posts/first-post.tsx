@@ -1,18 +1,17 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from "next/link"
-import { Box, Typography, useTheme } from '@mui/material'
+import { Box, Typography } from '@mui/material'
+import { useTheme } from "@mui/material"
 
 export default function FirstPost() {
   const theme = useTheme()
   const { palette } = theme
-  const { primary, secondary } = palette
-  const { main: primaryMain } = primary
-  const { main: secondaryMain } = secondary
+  const { primary, secondary, error } = palette
 
   return (
-    <>
-      <Box sx={{ display: 'flex', flexDirection: "column", backgroundColor: primaryMain }}>
+    <Box>
+      <Box sx={{ display: 'flex', flexDirection: "column", backgroundColor: primary.main }}>
         <h1>First Post</h1>
         <h2>
           <Link href="/">
@@ -20,7 +19,7 @@ export default function FirstPost() {
           </Link>
         </h2>
       </Box>
-      <Box sx={{ display: 'flex', flexDirection: "column", backgroundColor: theme.palette.secondary.main }}>
+      <Box sx={{ display: 'flex', flexDirection: "column", backgroundColor: error.main }}>
         <h1>First Post</h1>
         <h2>
           <Link href="/">
@@ -28,6 +27,6 @@ export default function FirstPost() {
           </Link>
         </h2>
       </Box>
-    </>
+    </Box>
   )
 }
