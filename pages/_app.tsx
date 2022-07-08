@@ -1,14 +1,30 @@
-import { useEffect } from 'react';
-import '../styles/global.css'
-import type { AppProps } from 'next/app'
-import { ThemeProvider, CssBaseline } from '@material-ui/core'
-import { theme } from 'themes/default'
+import React from "react";
+import "../styles/globals.css";
+import { CacheProvider, EmotionCache } from "@emotion/react";
+import { ThemeProvider, CssBaseline } from "@mui/material";
 
-export default function MyApp({ Component, pageProps }: AppProps) {
-  return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Component {...pageProps} />
-    </ThemeProvider>
-  )
-}
+import createEmotionCache from "../utils/createEmotionCache";
+import { theme } from "../styles/themes/default";
+
+const clientSideEmotionCache = createEmotionCache();
+
+type MyAppProps = {
+	Component: any;
+	emotionCache?: EmotionCache | undefined;
+	pageProps: any;
+};
+
+const MyApp = (props: MyAppProps) => {
+	const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+
+	return (
+		<CacheProvider value={emotionCache}>
+			<ThemeProvider theme={theme}>
+				<CssBaseline />
+				<Component {...pageProps} />
+			</ThemeProvider>
+		</CacheProvider>
+	);
+};
+
+export default MyApp;

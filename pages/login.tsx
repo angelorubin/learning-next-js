@@ -14,25 +14,17 @@ import {
 import { EmailOutlined, LockOutlined } from "@material-ui/icons";
 import Image from "next/image";
 import NextLink from "next/link";
-import { useTheme } from "@mui/material"
-
-const Item = styled(Paper)(({ theme }) => ({
-	...theme.typography.body2,
-	padding: theme.spacing(1),
-	textAlign: "center",
-	color: theme.palette.text.secondary,
-}));
+import { useTheme } from "@mui/material";
 
 export default function Login() {
-	const theme = useTheme()
-	const { primary, secondary, error, warning } = theme.palette
+	const theme = useTheme();
+	const { primary, secondary, error, warning } = theme.palette;
 
 	return (
 		<Box
 			sx={{
 				display: "flex",
-				alignItems: "stretch",
-				height: "100vh"
+				height: "100vh",
 			}}
 		>
 			<Box
@@ -42,7 +34,7 @@ export default function Login() {
 					height: "100vh",
 					flexDirection: "column",
 					alignItems: "center",
-					backgroundColor: primary.main
+					backgroundColor: primary.main,
 				}}
 			>
 				<Box
@@ -102,8 +94,7 @@ export default function Login() {
 					display: "flex",
 					justifyContent: "center",
 					alignItems: "center",
-					border: "2px solid red",
-					height: "100vh"
+					height: "100vh",
 				}}
 			>
 				<Box sx={{ display: "flex", flexDirection: "column" }}>
@@ -179,4 +170,4 @@ export default function Login() {
 			</Box>
 		</Box>
 	);
-};
+}
