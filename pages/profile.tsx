@@ -2,40 +2,35 @@ import React, { useRef } from "react";
 import { Box, Typography, Input } from "@mui/material";
 import Image from "next/image";
 import profilePic from "../public/assets/img/profile-default.jpg";
+// import { http } from "./api/config";
 import http from "axios";
 
 export async function getStaticProps(context) {
 	/*
 	cloudinary.v2.search
-		.expression('resource_type:image AND tags=kitten AND uploaded_at>1d AND bytes>1m')
-		.sort_by('public_id', 'desc')
-		.max_results(30)
-		.execute().then(result => console.log(result));
-		*/
+	.expression('resource_type:image AND tags=kitten AND uploaded_at>1d AND bytes>1m')
+	.sort_by('public_id', 'desc')
+	.max_results(30)
+	.execute().then(result => console.log(result));
+	*/
 	return {
 		props: {}, // will be passed to the page component as props
-	}
+	};
 }
 
 export default function Profile() {
 
 	const handleChange = async (e) => {
-
 		const formData = new FormData();
 
-		let files = e.target.files[0]
+		let files = e.target.files[0];
 
-		console.log(files)
+		console.log(files);
 
 		formData.append("profilePic", files);
 
 		try {
-			const resp = await http.post("/api/profile", formData, {
-				headers: {
-					"Content-Type": "multipart/form-data",
-				},
-			});
-
+			const resp = await http.post("api/profile", formData);
 			console.log(resp);
 		} catch (error) {
 			console.log(error);
